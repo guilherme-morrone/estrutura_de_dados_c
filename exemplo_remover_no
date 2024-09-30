@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct No
+{
+	int info;
+	struct No* prox;
+} No;
+typedef struct {
+	No* inicial;
+} Lista;
+
+Lista* criacao() {
+	Lista* l = (Lista*)calloc(1, sizeof(Lista));
+	l->inicial = NULL;
+	return l;
+}
+
+void inserirFim(Lista* lista, int valor) {
+	No* novoNo = (No*)calloc(1, sizeof(No));
+	novoNo->info = valor;
+	novoNo->prox = NULL;
+	if (lista->inicial == NULL) {
+		lista->inicial = novoNo;
+	}
+	else {
+		No* temp = lista->inicial;
+		while (temp->prox != NULL) {
+			temp = temp->prox;
+		}
+		temp->prox = novoNo;
+	}
+}
+
+int removerUltimoNo(Lista* lista) {
+	if (lista->inicial == NULL) {
+		//processo se não tiver nada na lista
+		return 0; // não acontece nada
+	}
+	else {
+		No* temp;
+		temp = lista->inicial;
+		if (temp->prox == NULL) {
+			// processo se tiver apenas um nó
+			lista->inicial = NULL;
+			free(temp);
+			return 1;
+		}
+		else {
+			while (temp->prox->prox != NULL){
+				//é parado no penúltimo nó, porque se o nó depois do último for NULL, o último nó será excluido
+				// e o penultimo nó se tornará o último nó
+				temp = temp->prox;
+			}
+			free(temp->prox);
+			temp->prox = NULL;
+			return 1;
+
+		}
+
+	}
+}
+
+void apresentar(Lista* lista) {
+	No* aux = lista->inicial;
+	while (aux != NULL) {
+		printf("%d -> ", aux->info);
+		aux = aux->prox;
+	}
+	printf("NULL\n");
+}
+
+
+int main() {
+	Lista* l;
+	l = criacao();
+	inserirFim(l, 10);
+	inserirFim(l, 12);
+	inserirFim(l, 120);
+	apresentar(l);
+	
+	removerUltimoNo(l);
+	apresentar(l);
+
+
+}
