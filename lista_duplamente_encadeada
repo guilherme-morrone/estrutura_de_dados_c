@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct No {
+	int info;
+	struct No* prox;
+	struct No* ant;
+}No;
+
+typedef struct {
+	No* inicio;
+	No* fim;
+} Lista;
+
+Lista* criacao() {
+	Lista* l = (Lista*)calloc(1, sizeof(Lista));
+	l->inicio = NULL;
+	l->fim = NULL;
+	return l;
+}
+
+void inserirInicio(Lista* lista, int valor) {
+	No* novono = (No*)calloc(1, sizeof(No));
+	novono->info = valor;
+	novono->ant = NULL;
+	novono->prox = lista->inicio;
+	if (lista->inicio == NULL) { //no caso da lista estiver vazia, novo nó será o último nó também
+		lista->fim = novono;
+	}
+	else {
+		lista->inicio = novono;
+	}
+	lista->inicio = novono;
+}
+
+void apresentar(Lista* lista) {
+	No* aux = lista->inicio;
+	while (aux != NULL) {
+		printf("%d -> ", aux->info);
+		aux = aux->prox;
+	}
+	printf("NULL\n");
+}
+void apresentarAoContrario(Lista* lista) {
+	No* aux = lista->fim;
+	while (aux != NULL) {
+		printf("%d -> ", aux->info);
+		aux = aux->ant;
+	}
+	printf("NULL\n");
+}
+
+void inseirNoFim(Lista* lista, int valor) {
+	No* novono = (No*)calloc(1, sizeof(No));
+	novono->info = valor;
+	novono->prox = NULL;
+	novono->ant = lista->fim;
+	if (lista->inicio == NULL) {
+		// neste caso, quando a lista estiver vazia, o novo nó passa a ser o primeiro tmb
+		lista->inicio = novono;
+	}
+	else {
+		//o que antes era o último, agora é o penultimo e o posterior dele é o novo nó 
+		lista->fim->prox = novono;
+	}
+	lista->fim = novono;
+}
+
+int removerNoInicio(Lista* lista) {
+	No* inicial = lista->inicio;
+	if (inicial == NULL) {
+		printf("Lista vazia");
+		return 0;
+	}
+	else {
+		if (lista->inicio == lista->fim) {
+			//só tem um nó
+			lista->inicio = NULL;
+			lista->fim = NULL;
+		}
+		else {
+			lista->inicio = inicial->prox;
+			lista->inicio->ant = NULL;
+		}
+		free(inicial);
+		return 1;
+	}
+}
+
+
+
+
+int main() {
+	Lista* listadupla;
+	listadupla = criacao();
+	inserirInicio(listadupla, 10);
+	inserirInicio(listadupla, 20);
+	inserirInicio(listadupla, 30);
+	inserirInicio(listadupla, 40);
+	apresentar(listadupla);
+	apresentarAoContrario(listadupla);
+
+
+
+}
