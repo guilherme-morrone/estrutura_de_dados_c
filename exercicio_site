@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+typedef struct {
+	char nome[50];
+	char url[50];
+}Site;
+
+typedef struct {
+	int tamanho;
+	int topo;
+	Site* vetor;
+} Pilha;
+
+Pilha* criarPilha(int tamanho) {
+	Pilha* p = (Pilha*)calloc(1, sizeof(Pilha));
+	p->tamanho;
+	p->topo;
+	p->vetor = (Site*)calloc(tamanho, sizeof(Site));
+	return p;
+}
+
+void push(Pilha* p, Site s) {
+	if (p->topo == p->tamanho - 1) {
+		printf("Pilha cheia\n");
+	}
+	else {
+		*(p->vetor + p->topo + 1) = s;
+		p->topo++;
+	}
+}
+
+Site pop(Pilha* p) {
+	if (p->topo == -1) {
+		printf("Pilha vazia");
+		Site vazio;
+		return vazio;
+	}
+	else {
+		Site valor = *(p->vetor + p->topo);
+		p->topo--;
+		return valor;
+	}
+}
+
+void impressao(Pilha* p) {
+	for (int i = 0; i <= p->topo; i++) {
+		Site s = *(p->vetor + i);
+		printf("%s %s -> ", s.nome, s.url);
+
+	}
+	printf("\n");
+}
+
+int main() {
+	Pilha* p = criarPilha(5);
+	Site s1;
+	strcpy_s(s1.nome, "Uol");
+	strcpy_s(s1.url, "www.uol.com");
+	push(p, s1);
+	Site s2;
+	strcpy_s(s2.nome, "G1");
+	strcpy_s(s2.url, "www.g1.com");
+	push(p, s2);
+	Site s3;
+	strcpy_s(s3.nome, "Unimar");
+	strcpy_s(s3.url, "www.unimar.br");
+	push(p, s3);
+	impressao(p);
+	pop(p);
+	impressao(p);
+}
