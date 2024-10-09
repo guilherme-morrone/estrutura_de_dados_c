@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct {
+	int tamanho;
+	int topo;
+	int* itens;
+} Pilha;
+
+Pilha* criarPilha(int tamanho) {
+	Pilha* p = (Pilha*)calloc(1, sizeof(Pilha));
+	p->tamanho = tamanho;
+	p->topo = -1;
+	p->itens = (int*)calloc(tamanho, sizeof(int));
+	return p;
+}
+
+void push(Pilha* p, int valor) {
+	if (p->topo == p->tamanho - 1) {
+		printf("Erro - pilha esta cheia, meu patrao");
+	}
+	else {
+		*(p->itens + p->topo + 1) = valor;
+		p->topo++;
+	}
+}
+
+int pop(Pilha* p) {
+	if (p->topo == -1) {
+		printf("Erro - Pilha esta vazia, meu patrao");
+		return 0;
+	}
+	else {
+		int valorRemovido = *(p->itens + p->topo);
+		p->topo--;
+		return valorRemovido;
+	}
+}
+
+int estaCheia(Pilha* p) {
+	return (p->topo == p->tamanho - 1);
+}
+int estaVazia(Pilha* p) {
+	return (p->topo == -1);
+}
