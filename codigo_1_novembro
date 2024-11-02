@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct No {
+	int conteudo;
+	struct No* esq;
+	struct No* dir;
+} No;
+
+No* criarNo(int qtd) {
+	No* novo_no;
+	if (qtd == 0)
+		novo_no = NULL;
+	else
+	{
+		novo_no = (No*)calloc(1, sizeof(No));
+		printf("Digite o valor: ");
+		scanf_s("%d", &novo_no->conteudo);
+		novo_no->esq = criarNo(qtd / 2);
+		novo_no->dir = criarNo(qtd - qtd / 2 - 1);
+	}
+	return novo_no;
+}
+
+void apresentar(No* raiz)
+{
+	if (raiz != NULL)
+	{
+		printf("%d ", raiz->conteudo);
+		apresentar(raiz->dir);
+		apresentar(raiz->esq);
+	}
+}
+
+void preOrdem(No* raiz) {
+	if (raiz != NULL) {
+		printf("%d", raiz->conteudo);
+		preOrdem(raiz->esq);
+		preOrdem(raiz->dir);
+	}
+}
+
+void posOrdem(No* raiz) {
+	if (raiz != NULL) {
+		posOrdem(raiz->esq);
+		posOrdem(raiz->dir);
+		printf("%d", raiz->conteudo);
+
+
+
+	}
+}
+
+
+void inOrdem(No* raiz) {
+	if (raiz != NULL) {
+		inOrdem(raiz->esq);
+		printf("%d", raiz->conteudo);
+		inOrdem(raiz->dir);
+	}
+}
+
+void nosFolhaPreOrdem(No* raiz) {
+	if (raiz != NULL) {
+		if (raiz->esq == NULL && raiz->dir == NULL) {
+			printf("%d", raiz->conteudo);
+		}
+		nosFolhaPreOrdem(raiz->esq);
+		nosFolhaPreOrdem(raiz->dir);
+
+	}
+}
+
+void inserirNo(No* raiz, int valor) {
+	if (raiz == NULL) {
+		raiz == (No*)calloc(1, sizeof(No));
+		raiz->conteudo = valor;
+		raiz->esq = NULL;
+		raiz->dir = NULL;
+	} 
+	else {
+		if (valor > raiz->conteudo) {
+			//recursividade
+			inserirNo(raiz->dir, valor);
+		}
+		else {
+			if (valor < raiz->conteudo){}
+		}
+	}
+}
+
+
+
+
+int main()
+{
+	No* Raiz;
+	Raiz = criarNo(10);
+	apresentar(Raiz);
+	printf
+}	
